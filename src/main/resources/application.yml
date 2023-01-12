@@ -16,3 +16,6 @@ spring:
 logging.level:
   org.hibernate.SQL: debug #쿼리를 콘솔이 아닌 로그 파일로 남김
   #org.hibernate.type: trace
+
+server:
+  port: 8081
