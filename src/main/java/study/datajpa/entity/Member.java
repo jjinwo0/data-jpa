@@ -12,6 +12,10 @@ import javax.persistence.*;
 //@ToString(): 객체를 만들어낼 때 출력
 //연관관계 필드는 넣지 않는 것이 좋음
 @ToString(of = {"id", "username", "age"})
+@NamedQuery(
+        name="Member.findByUsername",
+        query = "select m from Member m where m.username = :username"
+)
 public class Member {
 
     @Id @GeneratedValue
