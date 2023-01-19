@@ -12,6 +12,8 @@ spring:
       hibernate:
         #show_sql: true #jpa가 실행하는 쿼리를 콘솔에 찍어줌
         format_sql: true
+#        dialect -> 방언 (DB에 맞게 알아서 쿼리 형식 변환)
+#        dialect: org.hibernate.dialect.Oracle10Dialect
 
 logging.level:
   org.hibernate.SQL: debug #쿼리를 콘솔이 아닌 로그 파일로 남김
