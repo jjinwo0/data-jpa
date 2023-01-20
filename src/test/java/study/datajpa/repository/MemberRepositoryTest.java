@@ -14,6 +14,8 @@ import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,9 @@ class MemberRepositoryTest {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember(){
@@ -206,5 +211,32 @@ class MemberRepositoryTest {
         assertThat(page.getTotalPages()).isEqualTo(2);
         assertThat(page.isFirst()).isTrue();
         assertThat(page.hasNext()).isTrue();
+    }
+
+    @Test
+    public void bulkUpdate(){
+        //given
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 19));
+        memberRepository.save(new Member("member3", 20));
+        memberRepository.save(new Member("member4", 21));
+        memberRepository.save(new Member("member5", 40));
+        //memberRepository의 save 동작은 persist()동작.
+        //따라서 아직 DB에 반영되기 전 단계
+
+        //when
+        int resultCount = memberRepository.bulkAgePlus(20);
+        //벌크 연산은 직접 DB에 때려 넣는 방식
+        //따라서, 1차 캐시는 DB에 변동 사항이 생겼다는 사실을 모르므로
+        //벌크 작업 후에는 영속성 컨택스트를 비워줘야 한다.
+//        em.flush(); //영속성 컨텍스트에 남아있는 변동사항을 DB에 반영
+//        em.clear(); //1차 캐시 클리어
+
+        List<Member> result = memberRepository.findByUsername("member5");
+        Member member5 = result.get(0);
+        System.out.println("member5 = " + member5);
+
+        //then
+        assertThat(resultCount).isEqualTo(3);
     }
 }
