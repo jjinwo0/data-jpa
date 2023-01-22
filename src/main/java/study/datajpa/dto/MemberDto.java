@@ -1,5 +1,7 @@
 package study.datajpa.dto;
 
+import lombok.Data;
+
 public class MemberDto {
 
     private Long id;
