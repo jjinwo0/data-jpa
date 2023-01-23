@@ -15,6 +15,12 @@ spring:
 #        dialect -> 방언 (DB에 맞게 알아서 쿼리 형식 변환)
 #        dialect: org.hibernate.dialect.Oracle10Dialect
 
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
+
 logging.level:
   org.hibernate.SQL: debug #쿼리를 콘솔이 아닌 로그 파일로 남김
   #org.hibernate.type: trace
